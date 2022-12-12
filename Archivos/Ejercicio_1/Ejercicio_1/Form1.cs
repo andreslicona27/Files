@@ -30,15 +30,15 @@ namespace Ejercicio_1
             }
             catch (UnauthorizedAccessException)
             {
-                MessageBox.Show("Error", "You dont have permision to access this path informaiton", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You dont have permision to access this path informaiton", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Error", "You have to add a valid path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You have to add a valid path", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception)
             {
-                MessageBox.Show("Error", "There has been a problem with the path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("There has been a problem with the path", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -85,11 +85,15 @@ namespace Ejercicio_1
             }
             catch (UnauthorizedAccessException)
             {
-                MessageBox.Show("Error", "You dont have permision to access this path informaiton", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("You dont have permision to access this path informaiton", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ongoingDir = previousPath;
+                ShowInfo();
             }
             catch (Exception)
             {
-                MessageBox.Show("Error", "There has been a problem with the path", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("There has been a problem with the path", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ongoingDir = previousPath;
+                ShowInfo();
             }
         }
 
@@ -100,6 +104,7 @@ namespace Ejercicio_1
             {
                 ShowingFile fileContent = new ShowingFile(filesDictionary[lbFiles.SelectedItem.ToString()].FullName);
                 fileContent.Text = lbFiles.SelectedItem.ToString();
+
                 if (fileContent.ShowDialog() == DialogResult.Yes)
                 {
                     string newContent = fileContent.content;
