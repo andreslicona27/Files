@@ -36,6 +36,10 @@ namespace Ejercicio_1
             {
                 MessageBox.Show("You have to add a valid path", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            catch (DirectoryNotFoundException)
+            {
+                MessageBox.Show("That directory does not exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             catch (Exception)
             {
                 MessageBox.Show("There has been a problem with the path", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -46,28 +50,35 @@ namespace Ejercicio_1
         {
             DirectoryInfo[] subDirectories = ongoingDir.GetDirectories();
             FileInfo[] files = ongoingDir.GetFiles();
-            bool directoryIsParent = ongoingDir.Parent != null;
-            bool hasSubdirectories = subDirectories.Length > 0;
 
             lbFiles.Items.Clear();
             lbDirectories.Items.Clear();
+            directoriesDictionary.Clear();
 
-            if (directoryIsParent)
+            if (ongoingDir.Parent != null)
             {
                 directoriesDictionary.Add("^", new DirectoryInfo(ongoingDir.Parent.FullName));
             }
-            else if (hasSubdirectories)
+            else if (subDirectories.Length > 0)
             {
                 Array.ForEach(subDirectories, sub => directoriesDictionary.Add(sub.Name, sub));
             }
 
-            lbDirectories.Items.AddRange(directoriesDictionary.Keys.ToArray());
+            foreach (string d in directoriesDictionary.Keys)
+            {
+                lbDirectories.Items.Add(d);
+            }
+            //lbDirectories.Items.AddRange(directoriesDictionary.Keys.ToArray());
 
             filesDictionary.Clear();
             Array.ForEach(files, f => filesDictionary.Add(f.Name, f));
             if (files.Length > 0)
             {
-                lbFiles.Items.AddRange(filesDictionary.Keys.ToArray());
+                foreach(string f in filesDictionary.Keys)
+                {
+                    lbFiles.Items.Add(f);
+                }
+                //lbFiles.Items.AddRange(filesDictionary.Keys.ToArray());
             }
 
         }
